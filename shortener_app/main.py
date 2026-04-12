@@ -57,6 +57,7 @@ def forward_to_target_url(
         .first()
     )
     if db_url := crud.get_db_url_by_key(db=db, url_key=url_key):
+        crud.update_clicks(db=db, db_url=db_url)
         # directs browser to immediately go to matching target_url
         return RedirectResponse(db_url.target_url)
     else:
