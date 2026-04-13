@@ -3,6 +3,7 @@ from os import path
 import validators
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
+from sqlalchemy import REAL
 from sqlalchemy.orm import Session
 from starlette.datastructures import URL
 from starlette.types import Message
@@ -83,3 +84,12 @@ def create_url(url: schemas.URLBase, db: Session = Depends(get_db)):
     db_url = crud.create_db_url(db=db, url=url)
 
     return get_admin_info(db_url)
+
+
+@app.delete("/admin/{secret_key}")
+def delete_url(secret_key: str, request: Request, db: Session = Depends(get_db)):
+    if db_url := crud.deactivate_db_url_by_secret_key(db, secret_key=secret_key):
+        message = f"Successfully deleted shortened URL for '{db_url.target_url}'"
+        return {"detail": message}
+    else:
+        raise_not_found(request)
