@@ -2,6 +2,7 @@ from os import path
 
 import validators
 from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from sqlalchemy import REAL
 from sqlalchemy.orm import Session
@@ -14,6 +15,17 @@ from .database import SessionLocal, engine
 
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
+
+origins = ["http://localhost:5173", "localhost:5173"]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def get_db():
@@ -79,6 +91,7 @@ def get_url_info(secret_key: str, request: Request, db: Session = Depends(get_db
 
 @app.post("/url", response_model=schemas.URLInfo)
 def create_url(url: schemas.URLBase, db: Session = Depends(get_db)):
+    print(url)
     if not validators.url(url.target_url):
         raise_bad_request(message="Your provided URL is not valid")
     db_url = crud.create_db_url(db=db, url=url)
