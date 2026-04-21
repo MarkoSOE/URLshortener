@@ -17,7 +17,7 @@ const DeleteUrl = () => {
   };
 
   const deleteURL = async () => {
-    const response = await fetch("http://localhost:8000/admin/${adminUrl}", {
+    const response = await fetch(`http://localhost:8000/admin/${adminUrl}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });
@@ -41,7 +41,7 @@ const DeleteUrl = () => {
             </FieldLabel>
             <Input
               id="form-name"
-              type="url"
+              type="text"
               value={adminUrl}
               onChange={handleInput}
               required
