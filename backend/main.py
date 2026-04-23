@@ -1,7 +1,7 @@
 from os import path
 
 import validators
-from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi import Body, Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from sqlalchemy import REAL
@@ -45,11 +45,14 @@ def raise_not_found(request):
     raise HTTPException(status_code=404, detail=message)
 
 
+# I think this might be throwing an error when trying to save a URL
 def get_admin_info(db_url: models.URL) -> schemas.URLInfo:
     base_url = URL(get_settings().base_url)
+    print("BaseUR = ", base_url)
     admin_endpoint = app.url_path_for(
         "administration info", secret_key=db_url.secret_key
     )
+    print("admin_endpoint = ", admin_endpoint)
     db_url.url = str(base_url.replace(path=db_url.key))
     db_url.admin_url = str(base_url.replace(path=admin_endpoint))
     return db_url
@@ -71,7 +74,6 @@ def forward_to_target_url(
     )
     if db_url := crud.get_db_url_by_key(db=db, url_key=url_key):
         crud.update_clicks(db=db, db_url=db_url)
-        # directs browser to immediately go to matching target_url
         return RedirectResponse(db_url.target_url)
     else:
         raise_not_found(request)
@@ -91,11 +93,10 @@ def get_url_info(secret_key: str, request: Request, db: Session = Depends(get_db
 
 @app.post("/url", response_model=schemas.URLInfo)
 def create_url(url: schemas.URLBase, db: Session = Depends(get_db)):
-    print(url)
     if not validators.url(url.target_url):
         raise_bad_request(message="Your provided URL is not valid")
     db_url = crud.create_db_url(db=db, url=url)
-
+    print("successfully stored URL, let's check if its there")
     return get_admin_info(db_url)
 
 
