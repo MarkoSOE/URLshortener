@@ -28,7 +28,7 @@ const DeleteUrl = () => {
       // not a full URL, use input as-is
     }
 
-    const response = await fetch(`http://localhost:8000/admin/${secretKey}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/${secretKey}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });

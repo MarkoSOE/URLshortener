@@ -16,8 +16,7 @@ from .database import SessionLocal, engine
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
 
-origins = ["http://localhost:5173", "localhost:5173"]
-
+origins = [o.strip() for o in get_settings().allowed_origins.split(",")]
 
 app.add_middleware(
     CORSMiddleware,

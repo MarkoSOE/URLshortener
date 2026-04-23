@@ -34,7 +34,7 @@ const MainPage = () => {
     setPhase("loading");
     setResult(null);
 
-    const response = await fetch("http://localhost:8000/url", {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/url`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ target_url: url.trim() }),
