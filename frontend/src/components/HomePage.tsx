@@ -6,7 +6,7 @@ export const HomePage = () => {
   return (
     <div className="page">
       <div className="home-container">
-        <div className="home-eyebrow">URL Shortener</div>
+        <div className="home-eyebrow">URLsnip</div>
         <h1 className="home-title">
           Long links,
           <br />
@@ -28,10 +28,6 @@ export const HomePage = () => {
           <div className="stat-item">
             <div className="stat-value">~2s</div>
             <div className="stat-label">to shorten</div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-value">urlsnip</div>
-            <div className="stat-label">your domain</div>
           </div>
           <div className="stat-item">
             <div className="stat-value">∞</div>

@@ -28,13 +28,10 @@ const DeleteUrl = () => {
       // not a full URL, use input as-is
     }
 
-    const response = await fetch(
-      `http://localhost:8000/admin/${secretKey}`,
-      {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      },
-    );
+    const response = await fetch(`http://localhost:8000/admin/${secretKey}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
 
     if (response.ok) {
       setPhase("success");

@@ -12,7 +12,7 @@ function App() {
       <nav>
         <NavLink to="/" className="nav-logo">
           <span className="nav-logo-bracket">[</span>
-          urlsnip
+          URLsnip
           <span className="nav-logo-bracket">]</span>
         </NavLink>
         <div className="nav-links">
@@ -44,7 +44,7 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
-      <footer>urlsnip — fast url shortener &nbsp;·&nbsp; urlsnip.ca</footer>
+      <footer>URLsnip — fast url shortener &nbsp;·&nbsp; urlsnip.ca</footer>
     </BrowserRouter>
   );
 }
