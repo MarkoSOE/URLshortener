@@ -15,6 +15,7 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
+    """Load and cache application settings from the .env file."""
     settings = Settings()
     print(f"Loading settings for: {settings.env_name}")
     return settings
