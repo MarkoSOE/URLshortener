@@ -47,8 +47,9 @@ const DeleteUrl = () => {
   };
 
   return (
-    <div className="page">
+    <div className="page page-center">
       <div className="card delete-card">
+        <div className="eyebrow">US-01 / Delete</div>
         <h2 className="card-title">Delete a link</h2>
         <p className="card-subtitle">
           Enter your admin key to permanently remove the corresponding short

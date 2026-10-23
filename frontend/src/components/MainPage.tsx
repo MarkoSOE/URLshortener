@@ -65,8 +65,9 @@ const MainPage = () => {
   };
 
   return (
-    <div className="page">
+    <div className="page page-center">
       <div className="card">
+        <div className="eyebrow">US-01 / Create</div>
         <h2 className="card-title">Shorten a URL</h2>
         <p className="card-subtitle">
           Paste your long URL and get a clean short link instantly.
