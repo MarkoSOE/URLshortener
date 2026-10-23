@@ -21,5 +21,5 @@ def create_unique_key(db: Session, length: int = 5) -> str:
     while True:
         # Each byte gives ~6 bits of entropy; ceil(5 * 6 / 8) = 4 bytes is enough
         key = base64.urlsafe_b64encode(secrets.token_bytes(4)).decode()[:length]
-        if not crud.get_db_url_by_key(db, key):
+        if not crud.key_exists(db, key):
             return key

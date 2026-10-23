@@ -12,6 +12,11 @@ def get_db_url_by_key(db: Session, url_key: str) -> models.URL:
     )
 
 
+def key_exists(db: Session, url_key: str) -> bool:
+    """Return True if any URL record (active or deactivated) already uses the key."""
+    return db.query(models.URL.id).filter(models.URL.key == url_key).first() is not None
+
+
 def create_db_url(db: Session, url: schemas.URLBase) -> models.URL:
     """Create a new shortened URL record and persist it to the database."""
     key = keygen.create_unique_key(db)
