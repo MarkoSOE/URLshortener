@@ -1,99 +1,53 @@
-import { useNavigate } from "react-router";
+import { KeyRound, MousePointerClick, ShieldCheck, Zap } from "lucide-react";
+import { Shortener } from "./Shortener";
 
-const specs: [string, string][] = [
-  ["Key length", "5 characters"],
-  ["Encoding", "base64url"],
-  ["Admin key", "Issued per link"],
-  ["Account", "None required"],
-  ["Origin", "urlsnip.ca"],
-];
-
-const principles: [string, string][] = [
-  ["Short", "Five characters, nothing more than needed"],
-  ["Fast", "Hot links are served straight from cache"],
-  ["Honest", "No tracking pixels, no interstitial ads"],
-  ["Unobtrusive", "No sign-up — paste, shorten, share"],
+const features = [
+  {
+    icon: Zap,
+    title: "No sign-up",
+    desc: "Paste, shorten, share. No account or email needed.",
+  },
+  {
+    icon: KeyRound,
+    title: "Your own admin key",
+    desc: "Every link comes with a private admin URL you can use to delete it anytime.",
+  },
+  {
+    icon: MousePointerClick,
+    title: "Click counts",
+    desc: "See how many times each of your short links has been opened.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Honest redirects",
+    desc: "No tracking pixels, no interstitial ads. Popular links are served from cache.",
+  },
 ];
 
 export const HomePage = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="page">
-      <section className="home-hero">
-        <div>
-          <div className="eyebrow">US-01 / Shortener</div>
-          <h1 className="home-title">
-            Long links,
-            <br />
-            snipped.
-          </h1>
-          <p className="home-desc">
-            Transform long-form URLs into clean, shareable short links in
-            seconds.
-          </p>
-          <div className="home-actions">
-            <button className="btn-primary" onClick={() => navigate("/create")}>
-              Shorten a URL
-            </button>
-            <button
-              className="btn-secondary"
-              onClick={() => navigate("/delete")}
-            >
-              Delete a link
-            </button>
-          </div>
-          <dl className="spec-table">
-            {specs.map(([label, value]) => (
-              <div className="spec-row" key={label}>
-                <dt>{label}</dt>
-                <dd>{value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-
-        <div className="grid-panel" aria-hidden="true">
-          <div className="device">
-            <div className="device-lcd">
-              <span className="device-lcd-bar" />
-              <span>/xY3k_</span>
-            </div>
-            <div className="device-keys">
-              {Array.from({ length: 24 }, (_, i) => (
-                <span
-                  key={i}
-                  className={`device-key${i === 19 ? " on" : ""}`}
-                />
-              ))}
-            </div>
-            <div className="device-foot">
-              <span className="dot" />
-              SNIP
-            </div>
-          </div>
-          <span className="callout callout-a">A — Short key · 5 chars</span>
-          <span className="callout callout-b left">
-            B — Quick and easy to use
-          </span>
-        </div>
+      <section className="hero">
+        <span className="pill">Free · No sign-up needed</span>
+        <h1 className="hero-title">
+          Long links in.
+          <br />
+          Short links out.
+        </h1>
+        <p className="hero-desc">
+          Paste any URL to get a short, shareable link — then check how many times it's been clicked.
+        </p>
+        <Shortener showRecent />
       </section>
 
-      <section className="principles">
-        <div className="eyebrow">Principles · applied to URL/SNIP</div>
-        <ol className="principles-list">
-          {principles.map(([title, desc], i) => (
-            <li className="principle" key={title}>
-              <span className="principle-num">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div>
-                <div className="principle-title">{title}</div>
-                <div className="principle-desc">{desc}</div>
-              </div>
-            </li>
-          ))}
-        </ol>
+      <section className="features" aria-label="Features">
+        {features.map(({ icon: Icon, title, desc }) => (
+          <div className="feature-card" key={title}>
+            <Icon size={26} aria-hidden="true" className="feature-icon" />
+            <h2 className="feature-title">{title}</h2>
+            <p className="feature-desc">{desc}</p>
+          </div>
+        ))}
       </section>
     </div>
   );

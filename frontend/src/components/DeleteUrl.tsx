@@ -1,7 +1,11 @@
 import { useState } from "react";
+import { useLocation } from "react-router";
 
 const DeleteUrl = () => {
-  const [adminKey, setAdminKey] = useState("");
+  const location = useLocation();
+  const [adminKey, setAdminKey] = useState<string>(
+    (location.state as { adminKey?: string } | null)?.adminKey ?? "",
+  );
   const [error, setError] = useState("");
   const [phase, setPhase] = useState<"idle" | "loading" | "success" | "error">(
     "idle",
@@ -49,8 +53,7 @@ const DeleteUrl = () => {
   return (
     <div className="page page-center">
       <div className="card delete-card">
-        <div className="eyebrow">US-01 / Delete</div>
-        <h2 className="card-title">Delete a link</h2>
+        <h1 className="card-title">Delete a link</h1>
         <p className="card-subtitle">
           Enter your admin key to permanently remove the corresponding short
           link.
@@ -58,12 +61,13 @@ const DeleteUrl = () => {
 
         <form onSubmit={handleDelete}>
           <div className="field">
-            <label className="field-label">Admin Key</label>
+            <label className="field-label" htmlFor="admin-key">Admin key or admin URL</label>
             <div className="field-input-wrap">
               <input
+                id="admin-key"
                 className={`field-input${error ? " error" : ""}`}
                 type="text"
-                placeholder="your-secret-admin-key"
+                placeholder="https://urlsnip.ca/admin/… or your secret key"
                 value={adminKey}
                 onChange={(e) => {
                   setAdminKey(e.target.value);
